@@ -11,7 +11,8 @@ class App extends React.Component {
       background: 'white',
       color: 'black',
       users: [],
-      posts: []
+      posts: [],
+      searchField: ''
     };
   }
 
@@ -66,13 +67,17 @@ class App extends React.Component {
 
   render() {
 
+    const {users, searchField} = this.state;
+    const filteredUsers = users.filter(user => user.name.toLowerCase().includes(searchField.toLowerCase()));
+
     return (
       <div className="App" style={{background: this.state.background, color: this.state.color}}>
         <h1>Proiect 1</h1>
+        <input type='search' placeholder='search users' onChange={e => this.setState({searchField: e.target.value})} />
 
         <UserAddForm updateUsersList={(user) => {this.updateUsersList(user)}} />
 
-        <UserList users={this.state.users} />
+        <UserList users={filteredUsers} />
 
         <PostList posts={this.state.posts} />
 
